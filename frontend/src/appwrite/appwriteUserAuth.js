@@ -48,8 +48,8 @@ export class AuthService {
     try {
        this.account.createOAuth2Session(
         "google",
-        "http://localhost:5173/",
-        "http://localhost:5173/fail"
+        "https://edu-ai-1-tjwy.onrender.com/",
+        "https://edu-ai-1-tjwy.onrender.com/fail"
       );
       // window.location.href = authUrl;
     } catch (error) {
