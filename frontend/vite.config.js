@@ -7,7 +7,9 @@ export default defineConfig({
   server :{
     proxy :{
       "/api":{
-        target : "http://localhost:3000"
+        target : "https://edu-ai-ch6x.onrender.com",
+        changeOrigin : true,
+        secure : false
       }
     }
   }
