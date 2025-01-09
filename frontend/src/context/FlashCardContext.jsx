@@ -39,8 +39,14 @@ export const FlashCardContextProvider = ({ children }) => {
         fileTitle: flashCardToUpdate.fileTitle,
       };
 
+       // base url
+       const baseUrl =
+       import.meta.env.MODE === "production"
+         ? import.meta.env.VITE_BACKEND_URL
+         : import.meta.env.VITE_BACKEND_URL || "http://localhost:3000";
+
       const response = await fetch(
-        `/api/flashCard/updateFlashcard/${flashCardToUpdate.$id}`,
+        baseUrl + `/api/flashCard/updateFlashcard/${flashCardToUpdate.$id}`,
         {
           method: "PUT",
           headers: { "Content-Type": "application/json" },
@@ -64,7 +70,15 @@ export const FlashCardContextProvider = ({ children }) => {
     // for now i have kept it clearly visible but later on i will add
     // it to the env file
     // console.log("apiUrl hit.....");
-    const apiUrl = `/api/flashcard/getFlashCards/${userId}`;
+
+
+     // base url
+     const baseUrl =
+     import.meta.env.MODE === "production"
+       ? import.meta.env.VITE_BACKEND_URL
+       : import.meta.env.VITE_BACKEND_URL || "http://localhost:3000";
+
+    const apiUrl = baseUrl+`/api/flashcard/getFlashCards/${userId}`;
     try {
       const response = await fetch(apiUrl);
       if (!response.ok) throw new Error("Failed to fetch flashcards");

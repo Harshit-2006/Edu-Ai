@@ -43,11 +43,15 @@ export class AuthService {
 
   // Login using Google OAuth
   async loginWithGoogle() {
+
+    const redirectUrlOnSuccess = import.meta.env.MODE === "production" ? import.meta.env.VITE_AUTH_URL_SUCCESS : "http://localhost:5173";
+    const redirectUrlOnFailure = import.meta.env.MODE === "production" ? import.meta.env.VITE_AUTH_URL_FAILURE : "http://localhost:5173/fail";
+
     try {
        this.account.createOAuth2Session(
         "google",
-        import.meta.env.VITE_AUTH_URL_SUCCESS,
-        import.meta.env.VITE_AUTH_URL_FAILURE
+        redirectUrlOnSuccess,
+        redirectUrlOnFailure
       );
       // window.location.href = authUrl;
     } catch (error) {

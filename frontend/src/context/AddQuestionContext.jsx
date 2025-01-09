@@ -15,8 +15,14 @@ export const AddQuestionProvider = ({ children }) => {
   ) => {
     setLoading(true);
 
-    const mcqUrl = "/api/mcq/createMcq";
-    const flashCardUrl = "/api/flashCard/createFlashcard";
+    // base url 
+    const baseUrl =
+      import.meta.env.MODE === "production"
+        ? import.meta.env.VITE_BACKEND_URL
+        : import.meta.env.VITE_BACKEND_URL || "http://localhost:3000";
+
+    const mcqUrl = baseUrl+"/api/mcq/createMcq";
+    const flashCardUrl = baseUrl+"/api/flashCard/createFlashcard";
 
     try {
       // console.log("inside the context file for adding a question");

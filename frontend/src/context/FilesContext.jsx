@@ -41,11 +41,17 @@ export const FilesContextProvider = ({ children }) => {
 
       // console.log("file filtered  :",file[0]);
 
+      // base url
+      const baseUrl =
+        import.meta.env.MODE === "production"
+          ? import.meta.env.VITE_BACKEND_URL
+          : import.meta.env.VITE_BACKEND_URL || "http://localhost:3000";
+
       const whichFile = file[0].fileType;
       if (whichFile === "mcq") {
         // console.log("mcq file deleted so its content is also deleted ");
         // i have to move this to env file
-        const mcqUrl = `/api/mcq/deleteMcqs?fileTitle=${file[0].filename}`;
+        const mcqUrl = baseUrl+`/api/mcq/deleteMcqs?fileTitle=${file[0].filename}`;
         const response = await fetch(mcqUrl, {
           method: "DELETE",
           headers: {
@@ -60,7 +66,7 @@ export const FilesContextProvider = ({ children }) => {
       } else {
         // console.log("flashCard file deleted so its content is also deleted ");
         // i have to move this to env file
-        const flashCardUrl = `/api/flashCard/deleteFlashcards?fileTitle=${file[0].filename}`;
+        const flashCardUrl = baseUrl+`/api/flashCard/deleteFlashcards?fileTitle=${file[0].filename}`;
         const response = await fetch(flashCardUrl, {
           method: "DELETE",
           headers: {

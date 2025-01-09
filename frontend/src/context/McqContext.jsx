@@ -25,16 +25,21 @@ export const McqContextProvider = ({ children }) => {
       );
 
       const body = {
-        question : mcqToUpdate.question,
-        answer : mcqToUpdate.answer,
-        options : mcqToUpdate.options,
-        userId : mcqToUpdate.userId,
-        fileTitle : mcqToUpdate.fileTitle
-      }
+        question: mcqToUpdate.question,
+        answer: mcqToUpdate.answer,
+        options: mcqToUpdate.options,
+        userId: mcqToUpdate.userId,
+        fileTitle: mcqToUpdate.fileTitle,
+      };
 
+      // base url
+      const baseUrl =
+        import.meta.env.MODE === "production"
+          ? import.meta.env.VITE_BACKEND_URL
+          : import.meta.env.VITE_BACKEND_URL || "http://localhost:3000";
 
       const response = await fetch(
-        `/api/mcq/updateMcq/${mcqToUpdate.$id}`,
+        baseUrl + `/api/mcq/updateMcq/${mcqToUpdate.$id}`,
         {
           method: "PUT",
           headers: { "Content-Type": "application/json" },
@@ -57,7 +62,14 @@ export const McqContextProvider = ({ children }) => {
     // this is the api url from which i will fetch the mcqs and
     // for now i have kept it clearly visible but later on i will add
     // it to the env file
-    const apiUrl = `/api/mcq/getMcqs/${userId}`;
+
+    // base url
+    const baseUrl =
+      import.meta.env.MODE === "production"
+        ? import.meta.env.VITE_BACKEND_URL
+        : import.meta.env.VITE_BACKEND_URL || "http://localhost:3000";
+
+    const apiUrl = baseUrl + `/api/mcq/getMcqs/${userId}`;
     try {
       const response = await fetch(apiUrl);
       if (!response.ok) throw new Error("Failed to fetch MCQs");

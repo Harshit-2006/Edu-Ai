@@ -16,8 +16,14 @@ export const GenerateContentProvider = ({ children }) => {
   ) => {
     setLoading(true);
 
-    const mcqUrl = "/api/generate/mcqs";
-    const flashCardUrl = "/api/generate/flashcards";
+    // base url
+    const baseUrl =
+      import.meta.env.MODE === "production"
+        ? import.meta.env.VITE_BACKEND_URL
+        : import.meta.env.VITE_BACKEND_URL || "http://localhost:3000";
+
+    const mcqUrl = baseUrl + "/api/generate/mcqs";
+    const flashCardUrl = baseUrl + "/api/generate/flashcards";
 
     try {
       // console.log("inside the context file for generating the content");
