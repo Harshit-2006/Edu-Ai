@@ -1,4 +1,4 @@
-import { useParams } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 import { useState, useContext, useEffect, useMemo } from "react";
 import {
   Box,
@@ -17,6 +17,7 @@ import { UserDataContext } from "../context/UserDataContext.jsx";
 const FlashCardDetailPage = () => {
   const textColor = useColorModeValue("gray.100", "gray.700");
   const { filename } = useParams();
+  const navigate = useNavigate(); 
   const { flashCards, getFlashCards, loading, error } = useContext(FlashCardContext);
   const { sessionCookie } = useContext(UserDataContext);
 
@@ -37,9 +38,13 @@ const FlashCardDetailPage = () => {
 
   const handleNext = () => {
     setShowAnswer(false);
-    setCurrentCardIndex((prev) =>
-      prev < filteredFlashCards.length - 1 ? prev + 1 : 0
-    );
+
+    if (currentCardIndex < filteredFlashCards.length - 1) {
+      setCurrentCardIndex((prev) => prev + 1);
+    } else {
+      // Redirect back when all flashcards are viewed
+      navigate(-1);
+    }
   };
 
   const handlePrevious = () => {
@@ -94,7 +99,8 @@ const FlashCardDetailPage = () => {
           shadow="md"
           borderRadius="lg"
           borderWidth={1}
-          textAlign="center">
+          textAlign="center"
+        >
           <Text fontSize="xl" fontWeight="bold" mb={4}>
             {currentCard.question}
           </Text>
@@ -117,7 +123,8 @@ const FlashCardDetailPage = () => {
             <Button
               colorScheme="blue"
               onClick={() => setShowAnswer(true)}
-              mt={4}>
+              mt={4}
+            >
               Show Answer
             </Button>
           )}
@@ -129,7 +136,7 @@ const FlashCardDetailPage = () => {
             Previous
           </Button>
           <Button colorScheme="teal" variant="solid" onClick={handleNext}>
-            Next
+            {currentCardIndex < filteredFlashCards.length - 1 ? "Next" : "Finish"}
           </Button>
         </HStack>
       </VStack>

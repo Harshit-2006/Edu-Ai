@@ -1,4 +1,4 @@
-import { useParams } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 import { useState, useContext, useEffect, useMemo } from "react";
 import {
   Box,
@@ -16,6 +16,7 @@ import { UserDataContext } from "../context/UserDataContext.jsx";
 const McqDetailPage = () => {
   const textColor = useColorModeValue("gray.100", "gray.700");
   const { filename } = useParams();
+  const navigate = useNavigate();
   const { mcqs, getMcqs, loading, error } = useContext(McqContext);
   const { sessionCookie } = useContext(UserDataContext);
 
@@ -38,9 +39,13 @@ const McqDetailPage = () => {
   const handleNext = () => {
     setAnswerSubmitted(false);
     setSelectedOption(null);
-    setCurrentQuestionIndex((prev) =>
-      prev < filteredMcqData.length - 1 ? prev + 1 : 0
-    );
+
+    if (currentQuestionIndex < filteredMcqData.length - 1) {
+      setCurrentQuestionIndex((prev) => prev + 1);
+    } else {
+      // Redirect back when all MCQs are done
+      navigate(-1);
+    }
   };
 
   const handlePrevious = () => {
@@ -100,7 +105,8 @@ const McqDetailPage = () => {
           p={5}
           shadow="md"
           borderRadius="lg"
-          borderWidth={1}>
+          borderWidth={1}
+        >
           <Text fontSize="xl" fontWeight="bold" mb={4}>
             {currentQuestion.question}
           </Text>
@@ -121,7 +127,8 @@ const McqDetailPage = () => {
                     : "gray"
                 }
                 onClick={() => handleOptionClick(option)}
-                isDisabled={answerSubmitted}>
+                isDisabled={answerSubmitted}
+              >
                 {option}
               </Button>
             ))}
@@ -134,7 +141,7 @@ const McqDetailPage = () => {
             Previous
           </Button>
           <Button colorScheme="teal" variant="solid" onClick={handleNext}>
-            Next
+            {currentQuestionIndex < filteredMcqData.length - 1 ? "Next" : "Finish"}
           </Button>
         </HStack>
       </VStack>

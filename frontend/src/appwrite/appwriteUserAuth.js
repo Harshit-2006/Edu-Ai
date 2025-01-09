@@ -48,8 +48,8 @@ export class AuthService {
     try {
        this.account.createOAuth2Session(
         "google",
-        "https://edu-ai-1-tjwy.onrender.com/",
-        "https://edu-ai-1-tjwy.onrender.com/fail"
+        import.meta.env.VITE_AUTH_URL_SUCCESS,
+        import.meta.env.VITE_AUTH_URL_FAILURE
       );
       // window.location.href = authUrl;
     } catch (error) {
