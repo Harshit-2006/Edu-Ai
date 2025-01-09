@@ -98,6 +98,7 @@ const SignUp = () => {
               <FormControl>
                 <FormLabel color={textColor}>Name</FormLabel>
                 <Input
+                  color={useColorModeValue("gray.600","white")}
                   type="text"
                   name="name"
                   placeholder="Enter your name"
@@ -110,6 +111,7 @@ const SignUp = () => {
               <FormControl>
                 <FormLabel color={textColor}>Email</FormLabel>
                 <Input
+                  color={useColorModeValue("gray.600","white")}
                   type="email"
                   name="email"
                   placeholder="Enter your email"
@@ -123,6 +125,7 @@ const SignUp = () => {
                 <FormLabel color={textColor}>Password</FormLabel>
                 <InputGroup>
                   <Input
+                    color={useColorModeValue("gray.600","white")}
                     type={showPassword ? "text" : "password"}
                     name="password"
                     placeholder="Enter your password"
