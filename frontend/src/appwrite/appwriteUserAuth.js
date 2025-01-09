@@ -30,8 +30,6 @@ export class AuthService {
   // Login user and create session
   async login({ email, password }) {
     try {
-      // Check if the user is already logged in
-      await this.logout();
       const session = await this.account.createEmailPasswordSession(
         email,
         password
